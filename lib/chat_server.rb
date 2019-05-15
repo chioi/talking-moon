@@ -1,6 +1,7 @@
-require "chat_server/version"
+require 'sinatra'
 
-module ChatServer
-  class Error < StandardError; end
-  # Your code goes here...
+class Error < StandardError; end
+
+get '/' do
+  'Hello World!'
 end
