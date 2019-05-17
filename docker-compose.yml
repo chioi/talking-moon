@@ -3,5 +3,7 @@ services:
   web:
     image: chat_server:latest
     command: bundle exec rake
+    volumes:
+      - ./lib:/app/lib
     ports:
       - 4567:4567
