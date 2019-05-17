@@ -19,6 +19,8 @@ GEM
     rack (2.0.7)
     rack-protection (2.0.5)
       rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
     rainbow (3.0.0)
     rake (10.5.0)
     rspec (3.8.0)
@@ -67,6 +69,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.17)
   docker-api
+  rack-test
   rake (~> 10.0)
   rspec (~> 3.0)
   rubocop

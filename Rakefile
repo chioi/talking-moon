@@ -1,6 +1,9 @@
+require 'rspec'
+require 'rack/test'
 require "rspec/core/rake_task"
 require "docker"
 
+task :test => :spec
 RSpec::Core::RakeTask.new(:spec)
 
 task :default do
@@ -16,4 +19,3 @@ task :build do
   end
 end
 
-task :test => :spec
