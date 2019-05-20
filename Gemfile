@@ -9,6 +9,7 @@ gem 'sinatra'
 group :development do
   gem 'bundler', '~> 1.17'
   gem 'docker-api'
+  gem 'guard-rake'
   gem 'rack-test'
   gem 'rake', '~> 10.0'
   gem 'rspec', '~> 3.0'
