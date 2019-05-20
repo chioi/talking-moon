@@ -21,7 +21,7 @@ RSpec.describe 'Chat server API' do
   end
 
   it 'Saves messages' do
-    get URI(URI.escape("#{ENV['API_URL']}/hola cómo estás")).to_s
+    get URI(CGI.escape("#{ENV['API_URL']}/hola cómo estás")).to_s
     expect(last_response).to be_ok
     expect(last_response.body).to eq('Thanks!')
   end
