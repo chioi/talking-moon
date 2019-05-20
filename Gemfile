@@ -21,4 +21,5 @@ end
 
 group :development, :test do
   gem 'dotenv'
+  gem 'response_code_matchers'
 end

@@ -61,6 +61,8 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    response_code_matchers (0.1.0)
+      rack
     reverse_markdown (1.1.0)
       nokogiri
     rspec (3.8.0)
@@ -129,6 +131,7 @@ DEPENDENCIES
   guard-rake
   rack-test
   rake (~> 10.0)
+  response_code_matchers
   rspec (~> 3.0)
   rubocop
   sinatra
