@@ -16,3 +16,7 @@ group :development do
   gem 'sinatra-contrib'
   gem 'thin'
 end
+
+group :development, :test do
+  gem 'dotenv'
+end
