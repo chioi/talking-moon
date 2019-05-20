@@ -15,6 +15,7 @@ group :development do
   gem 'rspec', '~> 3.0'
   gem 'rubocop'
   gem 'sinatra-contrib'
+  gem 'solargraph'
   gem 'thin'
 end
 
