@@ -6,6 +6,8 @@ require 'uri'
 require 'chat_server'
 require 'rspec'
 require 'rack/test'
+require_relative '../lib/message_store.rb'
+require_relative '../lib/message_model.rb'
 
 RSpec.describe 'Chat server API' do
   include Rack::Test::Methods
@@ -24,5 +26,20 @@ RSpec.describe 'Chat server API' do
     get URI(CGI.escape("#{ENV['API_URL']}/hola cómo estás")).to_s
     expect(last_response).to be_ok
     expect(last_response.body).to eq('Thanks!')
+  end
+
+  describe '/messages' do
+    before(:all) do
+      @valid_message = Message.new(1, 'Hello Server!', 'xc434k')
+    end
+
+    context 'when a valid message is posted' do
+      context 'when the message can be persisted' do
+        it "responds with the 'no content' (204) status code" do
+          post "#{ENV['API_URL']}/messages", @valid_message.to_json
+          expect(last_response).to be_no_content
+        end
+      end
+    end
   end
 end
