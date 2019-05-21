@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class Message
-  def initialize(id, body, sender)
-    @id = id
+  def initialize(body, sender)
     @body = body
     @sender = sender
   end

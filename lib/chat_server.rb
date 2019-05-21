@@ -2,6 +2,7 @@
 
 require 'dotenv'
 require 'sinatra'
+require 'rack/bodyparser'
 require_relative 'message_store'
 
 require 'sinatra/reloader' if development?
@@ -11,13 +12,16 @@ store = MessageStore.new({})
 
 set :bind, '0.0.0.0'
 
-puts ENV['API_URL']
+class ChatServer < Sinatra::Application
+  set :bind, '0.0.0.0'
+  use Rack::BodyParser, parsers: {
+    'application/vnd.api+json' => proc { |data| JSON.parse data }
+  }
 
-get "#{ENV['API_URL']}/:message" do |message|
-  store.save message
-  'Thanks!'
-end
-
-get ENV['API_URL'] do
-  'Hello World!'
+  post "#{ENV['API_URL']}/messages" do
+    puts env['parsed_body']
+    message = Message.new(parsed_body.body, parsed_body.sender)
+    store.save message
+    status 204
+  end
 end

@@ -11,7 +11,7 @@ task test: :dotenv do
 end
 
 task :default do
-  ruby 'lib/chat_server.rb'
+  `rackup -p 4567 -s thin`
 end
 
 # TODO: Find a way to properly parse the stream

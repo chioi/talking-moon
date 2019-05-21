@@ -13,24 +13,12 @@ RSpec.describe 'Chat server API' do
   include Rack::Test::Methods
 
   def app
-    Sinatra::Application
-  end
-
-  it 'Says hello' do
-    get ENV['API_URL']
-    expect(last_response).to be_ok
-    expect(last_response.body).to eq('Hello World!')
-  end
-
-  it 'Saves messages' do
-    get URI(CGI.escape("#{ENV['API_URL']}/hola cómo estás")).to_s
-    expect(last_response).to be_ok
-    expect(last_response.body).to eq('Thanks!')
+    ChatServer
   end
 
   describe '/messages' do
     before(:all) do
-      @valid_message = Message.new(1, 'Hello Server!', 'xc434k')
+      @valid_message = Message.new('Hello Server!', 'xc434k')
     end
 
     context 'when a valid message is posted' do
