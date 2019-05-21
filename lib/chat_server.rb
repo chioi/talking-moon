@@ -18,6 +18,10 @@ class ChatServer < Sinatra::Application
     'application/vnd.api+json' => proc { |data| JSON.parse data }
   }
 
+  before do
+    halt 415 unless request.content_type == 'application/vnd.api+json'
+  end
+
   post "#{ENV['API_URL']}/messages" do
     message = Message.new(read_request_body('body'), read_request_body('sender'))
     @store.save message
