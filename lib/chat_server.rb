@@ -20,8 +20,12 @@ class ChatServer < Sinatra::Application
   }
 
   post "#{ENV['API_URL']}/messages" do
-    message = Message.new(env['parsed_body']['body'], env['parsed_body']['sender'])
+    message = Message.new(read_request_body('body'), read_request_body('sender'))
     @store.save message
     status 204
+  end
+
+  def read_request_body(attribute)
+    env['parsed_body'][attribute]
   end
 end
