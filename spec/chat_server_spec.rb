@@ -16,7 +16,7 @@ RSpec.describe 'Chat server API' do
     ChatServer
   end
 
-  describe '/messages' do
+  describe 'the /messages route' do
     before(:all) do
       @valid_message = Message.new('Hello Server!', 'xc434k')
     end
@@ -24,6 +24,7 @@ RSpec.describe 'Chat server API' do
     context 'when a valid message is posted' do
       context 'when the message can be persisted' do
         it "responds with the 'no content' (204) status code" do
+          env 'CONTENT_TYPE', 'application/vnd.api+json'
           post "#{ENV['API_URL']}/messages", @valid_message.to_json
           expect(last_response).to be_no_content
         end
