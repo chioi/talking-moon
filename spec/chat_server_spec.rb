@@ -22,16 +22,22 @@ RSpec.describe 'Chat server API' do
     end
 
     context 'when a request with invalid type is posted' do
-      it "responds with the 'unsupported media type' (415) status code" do
+      it "the response has the 'unsupported media type' (415) status code" do
         env 'CONTENT_TYPE', 'application/json'
         post "#{ENV['API_URL']}/messages", @valid_message.to_json
         expect(last_response).to be_unsupported_media_type
+      end
+
+      it 'the response has an errors field' do
+        env 'CONTENT_TYPE', 'application/json'
+        post "#{ENV['API_URL']}/messages", @valid_message.to_json
+        expect(last_response.errors).to exist
       end
     end
 
     context 'when a valid message is posted' do
       context 'when the message can be persisted' do
-        it "responds with the 'no content' (204) status code" do
+        it "the response has the 'no content' (204) status code" do
           env 'CONTENT_TYPE', 'application/vnd.api+json'
           post "#{ENV['API_URL']}/messages", @valid_message.to_json
           expect(last_response).to be_no_content
