@@ -21,6 +21,14 @@ RSpec.describe 'Chat server API' do
       @valid_message = Message.new('Hello Server!', 'xc434k')
     end
 
+    context 'when a request with invalid type is posted' do
+      it "responds with the 'unsupported media type' (415) status code" do
+        env 'CONTENT_TYPE', 'application/json'
+        post "#{ENV['API_URL']}/messages", @valid_message.to_json
+        expect(last_response).to be_unsupported_media_type
+      end
+    end
+
     context 'when a valid message is posted' do
       context 'when the message can be persisted' do
         it "responds with the 'no content' (204) status code" do
