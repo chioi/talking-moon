@@ -4,7 +4,6 @@ require 'dotenv'
 require 'sinatra'
 require 'rack/bodyparser'
 require_relative 'message_store'
-require 'pp'
 
 require 'sinatra/reloader' if development?
 Dotenv.load(".env.#{ENV['APP_ENV']}")
