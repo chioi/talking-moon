@@ -14,7 +14,25 @@ RSpec.describe 'Chat server API' do
   include Rack::Test::Methods
 
   def app
-    ChatServer
+    ChatServer::App
+  end
+
+  describe 'for non existent routes' do
+    before(:all) do
+      env 'CONTENT_TYPE', ENV['ACCEPTED_CONTENT_TYPE']
+      post "#{ENV['API_URL']}/we-will-never-have-this", @valid_message.to_json
+    end
+
+    context 'when a request is made' do
+      it "the response has the 'not found' (404) status code" do
+        expect(last_response).to be_not_found
+      end
+
+      it 'the response has an errors field' do
+        parsed_body = JSON.parse last_response.body
+        expect(parsed_body).to eq('errors' => [])
+      end
+    end
   end
 
   describe 'the /messages route' do
