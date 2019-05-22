@@ -21,10 +21,8 @@ class ChatServer < Sinatra::Application
   }
 
   before do
-    content_type ACCEPTED_CONTENT_TYPE
-    unless request.content_type == ACCEPTED_CONTENT_TYPE
-      halt [415, {}, ResponseCreator.createWithErrors([]).to_json]
-    end
+    reject_invalid_request_content_type
+    set_default_response_content_type
   end
 
   post "#{ENV['API_URL']}/messages" do
@@ -35,5 +33,19 @@ class ChatServer < Sinatra::Application
 
   def read_request_body(attribute)
     env['parsed_body'][attribute]
+  end
+
+  def set_default_response_content_type(type = ACCEPTED_CONTENT_TYPE)
+    content_type type
+  end
+
+  def reject_invalid_request_content_type
+    unless request.content_type == ACCEPTED_CONTENT_TYPE
+      immediately_send_errors 415
+    end
+  end
+
+  def immediately_send_errors(code, errors = [])
+    halt [code, {}, ResponseCreator.createWithErrors(errors).to_json]
   end
 end
