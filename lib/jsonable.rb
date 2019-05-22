@@ -20,6 +20,3 @@ class JSONable
     symbol.to_s.tr('@', '')
   end
 end
-
-class JSONAPIResponse < JSONable
-end

@@ -2,24 +2,18 @@
 
 require 'jsonable'
 
-class ErrorResponse < JSONable
-  def initialize(errors)
-    @errors = errors
-  end
-end
-
-class SuccessResponse < JSONable
-  def initialize(data)
-    @data = data
+class JSONAPIResponse < JSONable
+  def initialize(type_of_content, content)
+    instance_variable_set "@#{type_of_content}", content
   end
 end
 
 class ResponseCreator
   def self.createWithErrors(errors)
-    ErrorResponse.new errors
+    JSONAPIResponse.new 'errors', errors
   end
 
   def self.createWithData(data)
-    SuccessResponse.new data
+    JSONAPIResponse.new 'data', data
   end
 end
