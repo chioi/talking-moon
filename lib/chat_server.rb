@@ -4,9 +4,11 @@ require 'dotenv'
 require 'sinatra'
 require 'rack/bodyparser'
 require_relative 'message_store'
+require_relative 'response_creator'
 
 require 'sinatra/reloader' if development?
 Dotenv.load(".env.#{ENV['APP_ENV']}")
+ACCEPTED_CONTENT_TYPE = 'application/vnd.api+json'
 
 class ChatServer < Sinatra::Application
   def initialize
@@ -19,7 +21,8 @@ class ChatServer < Sinatra::Application
   }
 
   before do
-    halt 415 unless request.content_type == 'application/vnd.api+json'
+    content_type ACCEPTED_CONTENT_TYPE
+    halt [415, {}, ResponseCreator.createWithErrors([]).to_json] unless request.content_type == 'application/vnd.api+json'
   end
 
   post "#{ENV['API_URL']}/messages" do

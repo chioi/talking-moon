@@ -8,6 +8,7 @@ require 'rspec'
 require 'rack/test'
 require_relative '../lib/message_store.rb'
 require_relative '../lib/message_model.rb'
+require_relative '../lib/response_creator.rb'
 
 RSpec.describe 'Chat server API' do
   include Rack::Test::Methods
@@ -31,7 +32,8 @@ RSpec.describe 'Chat server API' do
       it 'the response has an errors field' do
         env 'CONTENT_TYPE', 'application/json'
         post "#{ENV['API_URL']}/messages", @valid_message.to_json
-        expect(last_response.errors).to exist
+        parsed_body = JSON.parse last_response.body
+        expect(parsed_body).to eq('errors' => [])
       end
     end
 
