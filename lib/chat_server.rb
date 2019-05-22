@@ -8,7 +8,7 @@ require_relative 'response_creator'
 
 require 'sinatra/reloader' if development?
 Dotenv.load(".env.#{ENV['APP_ENV']}")
-ACCEPTED_CONTENT_TYPE = 'application/vnd.api+json'
+ACCEPTED_CONTENT_TYPE = ENV['ACCEPTED_CONTENT_TYPE']
 
 class ChatServer < Sinatra::Application
   def initialize
@@ -17,12 +17,14 @@ class ChatServer < Sinatra::Application
 
   set :bind, '0.0.0.0'
   use Rack::BodyParser, parsers: {
-    'application/vnd.api+json' => proc { |data| JSON.parse data }
+    ACCEPTED_CONTENT_TYPE => proc { |data| JSON.parse data }
   }
 
   before do
     content_type ACCEPTED_CONTENT_TYPE
-    halt [415, {}, ResponseCreator.createWithErrors([]).to_json] unless request.content_type == 'application/vnd.api+json'
+    unless request.content_type == ACCEPTED_CONTENT_TYPE
+      halt [415, {}, ResponseCreator.createWithErrors([]).to_json]
+    end
   end
 
   post "#{ENV['API_URL']}/messages" do
