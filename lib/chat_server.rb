@@ -26,7 +26,7 @@ class ChatServer < Sinatra::Application
   end
 
   post "#{ENV['API_URL']}/messages" do
-    message = Message.new(read_request_body('body'), read_request_body('sender'))
+    message = Message.from_hash env['parsed_body']
     @store.save message
     status 204
   end
