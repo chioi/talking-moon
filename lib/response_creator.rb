@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'jsonable'
+require_relative 'jsonable'
 
 class JSONAPIResponse < JSONable
   def initialize(type_of_content, content)
