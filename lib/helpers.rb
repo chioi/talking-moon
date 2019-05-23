@@ -18,7 +18,8 @@ module Sinatra
       end
 
       def immediately_send_errors(code, errors = [])
-        halt [code, {}, ResponseCreator.createWithErrors(errors).to_json]
+        response_body = JSONAPI::ResponseBuilder.build(code, errors)
+        halt [code, {}, response_body.to_json]
       end
     end
   end
