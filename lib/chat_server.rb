@@ -5,15 +5,15 @@ require 'sinatra/base'
 require 'rack/bodyparser'
 require_relative 'helpers'
 require_relative 'message_store'
-require_relative 'response_creator'
 
 require 'sinatra/reloader' if ENV['APP_ENV'] == 'development'
 Dotenv.load(".env.#{ENV['APP_ENV']}")
 ACCEPTED_CONTENT_TYPE = ENV['ACCEPTED_CONTENT_TYPE']
 
 module ChatServer
-  class App < Sinatra::Application
+  class App < Sinatra::Base
     def initialize
+      super
       @store = MessageStore.new({})
     end
 
