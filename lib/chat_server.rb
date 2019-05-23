@@ -35,5 +35,9 @@ module ChatServer
       @store.save message
       status 204
     end
+
+    not_found do
+      immediately_send_errors 404
+    end
   end
 end
