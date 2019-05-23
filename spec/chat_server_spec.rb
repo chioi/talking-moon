@@ -21,6 +21,7 @@ RSpec.describe 'Chat server API' do
     before(:all) do
       env 'CONTENT_TYPE', ENV['ACCEPTED_CONTENT_TYPE']
       post "#{ENV['API_URL']}/we-will-never-have-this", @valid_message.to_json
+      @not_found_error = JSONAPI::ResponseBuilder.build 404
     end
 
     context 'when a request is made' do
@@ -29,8 +30,7 @@ RSpec.describe 'Chat server API' do
       end
 
       it 'the response has an errors field' do
-        parsed_body = JSON.parse last_response.body
-        expect(parsed_body).to eq('errors' => [])
+        expect(last_response.body).to eq(@not_found_error.to_json)
       end
     end
   end
@@ -44,6 +44,7 @@ RSpec.describe 'Chat server API' do
       before(:all) do
         env 'CONTENT_TYPE', 'application/json'
         post "#{ENV['API_URL']}/messages", @valid_message.to_json
+        @unsupported_media_type_error = JSONAPI::ResponseBuilder.build 415
       end
 
       it "the response has the 'unsupported media type' (415) status code" do
@@ -51,8 +52,7 @@ RSpec.describe 'Chat server API' do
       end
 
       it 'the response has an errors field' do
-        parsed_body = JSON.parse last_response.body
-        expect(parsed_body).to eq('errors' => [])
+        expect(last_response.body).to eq(@unsupported_media_type_error.to_json)
       end
     end
 
