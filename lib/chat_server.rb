@@ -11,27 +11,29 @@ require 'sinatra/reloader' if ENV['APP_ENV'] == 'development'
 Dotenv.load(".env.#{ENV['APP_ENV']}")
 ACCEPTED_CONTENT_TYPE = ENV['ACCEPTED_CONTENT_TYPE']
 
-class ChatServer < Sinatra::Application
-  def initialize
-    @store = MessageStore.new({})
-  end
+module ChatServer
+  class App < Sinatra::Application
+    def initialize
+      @store = MessageStore.new({})
+    end
 
-  set :bind, '0.0.0.0'
+    set :bind, '0.0.0.0'
 
-  use Rack::BodyParser, parsers: {
-    ACCEPTED_CONTENT_TYPE => proc { |data| JSON.parse data }
-  }
+    use Rack::BodyParser, parsers: {
+      ACCEPTED_CONTENT_TYPE => proc { |data| JSON.parse data }
+    }
 
-  helpers Sinatra::ChatServer::Helpers
+    helpers Sinatra::ChatServer::Helpers
 
-  before do
-    reject_invalid_request_content_type
-    set_default_response_content_type
-  end
+    before do
+      reject_invalid_request_content_type
+      set_default_response_content_type
+    end
 
-  post "#{ENV['API_URL']}/messages" do
-    message = Message.from_hash env['parsed_body']
-    @store.save message
-    status 204
+    post "#{ENV['API_URL']}/messages" do
+      message = Message.from_hash env['parsed_body']
+      @store.save message
+      status 204
+    end
   end
 end
