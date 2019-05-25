@@ -2,13 +2,14 @@
 
 A small chat server built with Sinatra.
 
-The name comes from a Sinatra's song called *The moon won't talk* or something like that.
-
+The name comes from a Sinatra's song called *The moon won't talk*.
 
 ## Development 
 
 Install `rvm`.
+
 `cd` into the directory and trust the `.rvmrc` file.
+
 Run `bundle exec rake` to fire up the server.
 
 ## Testing
