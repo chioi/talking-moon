@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'response_creator'
+
 module Sinatra
   module ChatServer
     module Helpers
