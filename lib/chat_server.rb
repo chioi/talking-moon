@@ -17,8 +17,6 @@ module ChatServer
       @store = MessageStore.new({})
     end
 
-    set :bind, '0.0.0.0'
-
     use Rack::BodyParser, parsers: {
       ACCEPTED_CONTENT_TYPE => proc { |data| JSON.parse data }
     }

@@ -11,7 +11,7 @@ task test: :dotenv do
 end
 
 task :default do
-  `rackup -p 4567 -s thin`
+  `rackup -p 4567 -o 0.0.0.0`
 end
 
 # TODO: Find a way to properly parse the stream
