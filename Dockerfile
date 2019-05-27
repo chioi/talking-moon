@@ -6,6 +6,7 @@ WORKDIR /app
 COPY Gemfile /app
 COPY Gemfile.lock /app
 COPY Rakefile /app
+COPY config.ru /app
 COPY lib /app/lib
 
 RUN apk --update add --virtual build-dependencies ruby-dev build-base
