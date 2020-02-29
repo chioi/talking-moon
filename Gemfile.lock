@@ -59,7 +59,7 @@ GEM
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
-    rake (10.5.0)
+    rake (12.3.3)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -133,7 +133,7 @@ DEPENDENCIES
   guard-rake
   rack-bodyparser
   rack-test
-  rake (~> 10.0)
+  rake (~> 12.3)
   response_code_matchers
   rspec (~> 3.0)
   rubocop
