@@ -12,7 +12,7 @@ group :development do
   gem 'docker-api'
   gem 'guard-rake'
   gem 'rack-test'
-  gem 'rake', '~> 10.0'
+  gem 'rake', '~> 12.3'
   gem 'rspec', '~> 3.0'
   gem 'rubocop'
   gem 'sinatra-contrib'
